@@ -16,7 +16,7 @@ function getDeck() {
     return deck;
 }
 
-function shuffle(deck, name) {
+function shuffle(deck, id) {
     const SHUFFLE_FACTOR = 1000;
     for (let i = 0; i < SHUFFLE_FACTOR; i++) {
         let i = Math.floor((Math.random() * deck.length));
@@ -31,23 +31,23 @@ function shuffle(deck, name) {
         deck[i] = deck[j];
         deck[j] = tmp;
     }
-    renderDeck(deck, name);
+    renderDeck(deck, id);
 }
 
 function deal(deck, res, id) {
     if (deck.length > 0) {
         res.push(deck.shift());
-        renderDeck(deck, 'deck' + id);
+        renderDeck(deck, id);
         renderRes(res, 'res' + id);
     }
 }
 
 function drawCard(deck, hand, id) {
-    
+    document.getElementById('hand' + id).innerHTML = "";
 }
 
-function renderDeck(deck, name) {
-    document.getElementById(name).innerHTML = "";
+function renderDeck(deck, id) {
+    document.getElementById('deck' + id).innerHTML = "";
     let card = document.createElement("div");
 
     if (deck.length > 0) {
@@ -60,7 +60,7 @@ function renderDeck(deck, name) {
     } else {
         card.className = "empty-card";
     }
-    document.getElementById(name).appendChild(card);
+    document.getElementById('deck' + id).appendChild(card);
 
 }
 
@@ -102,7 +102,7 @@ document.addEventListener('contextmenu', e => {
 
 let deck1 = getDeck();
 let deck2 = getDeck();
-document.addEventListener('DOMContentLoaded', renderDeck(deck1, "deck1"))
-document.addEventListener('DOMContentLoaded', renderDeck(deck2, "deck2"))
+document.addEventListener('DOMContentLoaded', renderDeck(deck1, 1))
+document.addEventListener('DOMContentLoaded', renderDeck(deck2, 2))
 
 eDeck1.addEventListener("mouseup", (event) => checkClick(event, deck1, res1, 1));
