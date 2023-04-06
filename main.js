@@ -38,7 +38,7 @@ function deal(deck, res, id) {
     if (deck.length > 0) {
         res.push(deck.shift());
         renderDeck(deck, id);
-        renderRes(res, 'res' + id);
+        renderRes(res, id);
     }
 }
 
@@ -64,8 +64,8 @@ function renderDeck(deck, id) {
 
 }
 
-function renderRes(res, name) {
-    document.getElementById(name).innerHTML = "";
+function renderRes(res, id) {
+    document.getElementById('res' + id).innerHTML = "";
 
     for (let i = 0; i < res.length; i++) {
         let card = document.createElement("div");
@@ -75,7 +75,7 @@ function renderRes(res, name) {
         value.innerHTML = res[i].Value;
         card.appendChild(value);
 
-        document.getElementById(name).appendChild(card);
+        document.getElementById('res' + id).appendChild(card);
     }
 }
 
