@@ -6,6 +6,17 @@
 <body>
     <div class="deck">
         <div class="playing-field">
+            <div class="bot-row">
+                <div class="col-1">
+                    test
+                </div>
+                <div class="col-2">
+                    <div class="hand-zone"></div>
+                </div>
+                <div class="col-3">
+                    test
+                </div>
+            </div>
             <div class="top-row">
                 <div class="col-1">
                     <div id="deck1"></div>
@@ -16,6 +27,20 @@
                 <div class="col-3">
                     <a href="javascript:void(0)" class="btn" onclick="shuffle(deck1, '1')">Shuffle</a>
                     <a href="javascript:void(0)" class="btn" onclick="deal(deck1, res1, '1')">Deal</a>
+                </div>
+            </div>
+        </div>
+        <div class="playing-field">
+            <div class="top-row">
+                <div class="col-3">
+                    <a href="javascript:void(0)" class="btn" onclick="shuffle(deck2, '2')">Shuffle</a>
+                    <a href="javascript:void(0)" class="btn" onclick="deal(deck2, res2, '2')">Deal</a>
+                </div>
+                <div class="col-2">
+                    <div id="res2"></div>
+                </div>
+                <div class="col-1">
+                    <div id="deck2"></div>
                 </div>
             </div>
             <div class="bot-row">
@@ -29,14 +54,6 @@
                     test
                 </div>
             </div>
-        </div>
-        <div class="playing-field">
-            <div>
-                <a href="javascript:void(0)" class="btn" onclick="shuffle(deck2, '2')">Shuffle</a>
-                <a href="javascript:void(0)" class="btn" onclick="deal(deck2, res2, '2')">Deal</a>
-            </div>
-            <div id="res2"></div>
-            <div id="deck2"></div>
         </div>
     </div>
 </body>

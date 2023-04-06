@@ -102,6 +102,8 @@ document.addEventListener('contextmenu', e => {
 
 let deck1 = getDeck();
 let deck2 = getDeck();
+shuffle(deck1, 1);
+shuffle(deck2, 2);
 document.addEventListener('DOMContentLoaded', renderDeck(deck1, 1))
 document.addEventListener('DOMContentLoaded', renderDeck(deck2, 2))
 
