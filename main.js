@@ -42,8 +42,13 @@ function deal(deck, res, id) {
     }
 }
 
+// to-do: little bit of boiler plate here, maybe can encapsulate
 function drawCard(deck, hand, id) {
-    document.getElementById('hand' + id).innerHTML = "";
+    if (deck.length > 0) {
+        hand.push(deck.shift());
+        renderDeck(deck, id);
+        renderHand(hand, id);
+    }
 }
 
 function renderDeck(deck, id) {
@@ -81,10 +86,22 @@ function renderRes(res, id) {
 
 function renderHand(hand, id) {
     document.getElementById("hand" + id).innerHTML = "";
+    document.getElementById("hand" + id).className = "hand";
+
+    for (i = 0; i < hand.length; i++) {
+        let card = document.createElement("div");
+        let value = document.createElement("div");
+        card.className = "card";
+        value.className = "value";
+        value.innerHTML = hand[i].Value;
+        card.appendChild(value);
+
+        document.getElementById('hand' + id).appendChild(card);
+    }
 
 }
 
-function checkClick(e, deck, res, id) {
+function checkClick(e, deck, res, hand, id) {
     if (!e) var e = window.event;
     if (e.which == 1) {
         drawCard(deck, hand, id);
@@ -107,4 +124,5 @@ shuffle(deck2, 2);
 document.addEventListener('DOMContentLoaded', renderDeck(deck1, 1))
 document.addEventListener('DOMContentLoaded', renderDeck(deck2, 2))
 
-eDeck1.addEventListener("mouseup", (event) => checkClick(event, deck1, res1, 1));
+eDeck1.addEventListener("mouseup", (event) => checkClick(event, deck1, res1, hand1, 1));
+eDeck2.addEventListener("mouseup", (event) => checkClick(event, deck2, res2, hand2, 2));
