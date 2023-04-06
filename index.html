@@ -5,17 +5,38 @@
 
 <body>
     <div class="deck">
-        <h1>A Deck of Cards</h1>
-
-        <a href="javascript:void(0)" class="btn" onclick="shuffle(deck1)">Shuffle</a>
-        <a href="javascript:void(0)" class="btn" onclick="deal(deck1, res1)">Deal</a>
-        <div>
-            <div id="deck1"></div>
-            <div id="res1"></div>
+        <div class="playing-field">
+            <div class="top-row">
+                <div class="col-1">
+                    <div id="deck1"></div>
+                </div>
+                <div class="col-2">
+                    <div id="res1"></div>
+                </div>
+                <div class="col-3">
+                    <a href="javascript:void(0)" class="btn" onclick="shuffle(deck1, 'deck1')">Shuffle</a>
+                    <a href="javascript:void(0)" class="btn" onclick="deal(deck1, res1, '1')">Deal</a>
+                </div>
+            </div>
+            <div class="bot-row">
+                <div class="col-1">
+                    test
+                </div>
+                <div class="col-2">
+                    <div class="hand-zone"></div>
+                </div>
+                <div class="col-3">
+                    test
+                </div>
+            </div>
         </div>
-        <div>
-            <div id="deck2"></div>
+        <div class="playing-field">
+            <div>
+                <a href="javascript:void(0)" class="btn" onclick="shuffle(deck2, res2)">Shuffle</a>
+                <a href="javascript:void(0)" class="btn" onclick="deal(deck2, res2)">Deal</a>
+            </div>
             <div id="res2"></div>
+            <div id="deck2"></div>
         </div>
     </div>
 </body>

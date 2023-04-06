@@ -1,4 +1,10 @@
+let eDeck1 = document.getElementById("deck1");
+let eDeck2 = document.getElementById("deck2");
+
 res1 = [];
+res2 = [];
+hand1 = [];
+hand2 = [];
 
 function getDeck() {
     let deck = new Array();
@@ -28,24 +34,34 @@ function shuffle(deck, name) {
     renderDeck(deck, name);
 }
 
-function deal(deck, res, name) {
-    res.push(deck.shift());
-    renderDeck(deck);
-    renderRes(res, "res1");
+function deal(deck, res, id) {
+    if (deck.length > 0) {
+        res.push(deck.shift());
+        renderDeck(deck, 'deck' + id);
+        renderRes(res, 'res' + id);
+    }
+}
+
+function drawCard(deck, hand, id) {
+    
 }
 
 function renderDeck(deck, name) {
     document.getElementById(name).innerHTML = "";
-
-    // render just the top card
     let card = document.createElement("div");
-    let value = document.createElement("div");
-    card.className = "card";
-    value.className = "value";
-    value.innerHTML = deck[0].Value;
-    card.appendChild(value);
 
+    if (deck.length > 0) {
+        // render just the top card
+        let value = document.createElement("div");
+        card.className = "card";
+        value.className = "value";
+        value.innerHTML = deck[0].Value;
+        card.appendChild(value);
+    } else {
+        card.className = "empty-card";
+    }
     document.getElementById(name).appendChild(card);
+
 }
 
 function renderRes(res, name) {
@@ -63,7 +79,30 @@ function renderRes(res, name) {
     }
 }
 
+function renderHand(hand, id) {
+    document.getElementById("hand" + id).innerHTML = "";
+
+}
+
+function checkClick(e, deck, res, id) {
+    if (!e) var e = window.event;
+    if (e.which == 1) {
+        drawCard(deck, hand, id);
+    } else if (e.which == 3) {
+        deal(deck, res, id);
+    }
+}
+
+// disable right clicks
+
+document.addEventListener('contextmenu', e => {
+    e.preventDefault();
+})
+
+
 let deck1 = getDeck();
 let deck2 = getDeck();
 document.addEventListener('DOMContentLoaded', renderDeck(deck1, "deck1"))
 document.addEventListener('DOMContentLoaded', renderDeck(deck2, "deck2"))
+
+eDeck1.addEventListener("mouseup", (event) => checkClick(event, deck1, res1, 1));

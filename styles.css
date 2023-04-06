@@ -1,19 +1,75 @@
-.card
-{
+body {
+    padding: 0;
+    margin: 0;
+}
+.playing-field {
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    width: auto;
+}
+.top-row {
+    display: flex;
+    flex: 1 1 auto;
+}
+.bot-row {
+    display: flex;
+    flex: 0 1 auto;
+}
+.col-1 {
+    display: flex;
+    flex: 0 1 auto;
+}
+.col-2 {
+    display: flex;
+    flex: 1 1 auto;
+    background-color: lightblue;
+    align-items: flex-end;
+    justify-content: center;
+}
+.col-3 {
+    display: flex;
+    flex: 0 1 auto;
+}
+
+.card {
     display: flex;
     align-items: center;
     justify-content: center;
     border: solid 1px #aaa;
     border-radius: 9px;
-    width: 95px;
-    height: 150px;
-    float:right;
+    width: 8vw;
+    height: 14vh;
     background-color: white;
     padding: 3px 3px 3px 3px;
     margin: 5px;
+    float: left;
+}
+
+.empty-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #aaa;
+    border-radius: 9px;
+    width: 8vw;
+    height: 14vh;
+    background-color: darkgray;
+    padding: 3px 3px 3px 3px;
+    margin: 5px;
+    float: left;
 }
 
 .card .value{
     font-size:15pt;
     font-family: sans-serif;
+}
+
+.hand-zone {
+    display: flex;
+    background-color: aliceblue;
+    height: 18vh;
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
 }
