@@ -39,6 +39,8 @@ function shuffle(deck, id) {
     renderDeck(deck, id);
 }
 
+// card movement functions
+
 function deal(deck, res, id) {
     if (deck.length > 0) {
         res.push(deck.shift());
@@ -53,6 +55,14 @@ function drawCard(deck, hand, id) {
         hand.push(deck.shift());
         renderDeck(deck, id);
         renderHand(hand, id);
+    }
+}
+
+function resToStock(res, stock, id, i) {
+    if (res.length > 0) {
+        stock.push(res.splice(i, 1)[0]);
+        renderRes(res, id);
+        renderStock(stock, id);
     }
 }
 
@@ -91,15 +101,35 @@ function renderDeck(deck, id) {
 
 function renderRes(res, id) {
     let target_element = document.getElementById('res' + id);
-
-
     target_element.innerHTML = "";
-
 
     for (let i = 0; i < res.length; i++) {
         let cardWrap = document.createElement("div");
         let card = document.createElement("div");
         let value = document.createElement("div");
+
+        // click handlers
+        if (id === 1) {
+            card.addEventListener("mouseup", (e) => {
+                console.log(e);
+                if (!e) var e = window.event;
+                if (e.which == 1) {
+                    resToStock(res1, stock1, 1, i);
+                } else if (e.which == 3) {
+                    // to-do: resToClock();
+                }
+            });
+        } else {
+            card.addEventListener("mouseup", (e) => {
+                if (!e) var e = window.event;
+                if (e.which == 1) {
+                    resToStock(res2, stock2, 2, i);
+                } else if (e.which == 3) {
+                    // to-do: resToClock();
+                }
+            });
+        }
+
         cardWrap.className = "card-wrap";
         card.className = "card";
         value.className = "value";
@@ -137,9 +167,9 @@ function renderStock(stock, id) {
     if (stock.length > 0) {
         let value = document.createElement("div");
         card.className = "card";
-        card.id = stock[0].Value;
+        card.id = stock[stock.length-1].Value;
         value.className = "value";
-        value.innerHTML = stock[0].Value;
+        value.innerHTML = stock.length;
         card.appendChild(value);
     } else {
         card.className = "empty-card";
