@@ -1,5 +1,7 @@
 let eDeck1 = document.getElementById("deck1");
 let eDeck2 = document.getElementById("deck2");
+let hand1_element = document.getElementById("hand1");
+let hand2_element = document.getElementById("hand2");
 
 res1 = [];
 res2 = [];
@@ -12,7 +14,6 @@ function getDeck() {
         let card = {Value: (i + 1)};
         deck.push(card);
     }
-    console.log(deck);
     return deck;
 }
 
@@ -51,10 +52,45 @@ function drawCard(deck, hand, id) {
     }
 }
 
+function addDragEventListeners(element, id) {
+    element.addEventListener("dragover", (e) => e.preventDefault());
+    element.addEventListener("drop", (e) => {
+        e.preventDefault();
+        if (id == 1) {
+            drawCard(deck1, hand1, 1);
+        } else {
+            drawCard(deck2, hand2, 2);
+        }
+        element.setAttribute('drop', 'true');
+    })
+}
+
 function renderDeck(deck, id) {
     document.getElementById('deck' + id).innerHTML = "";
     let card = document.createElement("div");
-
+    card.draggable = true;
+    if (id === 1) {
+        if (!hand1_element.hasAttribute('listenerOnDrop')) {
+            hand1_element.addEventListener("dragover", (e) => e.preventDefault());
+            hand1_element.addEventListener("drop", (e) => {
+                e.preventDefault();
+                drawCard(deck1, hand1, 1);
+            })
+            hand1_element.setAttribute('listenerOnDrop', 'true');
+        }
+        card.addEventListener("mouseup", (e) => checkClick(e, deck1, res1, hand1, 1));
+    } else {
+        if (!hand2_element.hasAttribute('listenerOnDrop')) {
+            hand2_element.addEventListener("dragover", (e) => e.preventDefault());
+            hand2_element.addEventListener("drop", (e) => {
+                e.preventDefault();
+                drawCard(deck2, hand2, 2);
+            })
+            hand2_element.setAttribute('listenerOnDrop', 'true');
+        }
+        card.addEventListener("mouseup", (e) => checkClick(e, deck2, res2, hand2, 2));
+    }
+   
     if (deck.length > 0) {
         // render just the top card
         let value = document.createElement("div");
@@ -66,7 +102,6 @@ function renderDeck(deck, id) {
         card.className = "empty-card";
     }
     document.getElementById('deck' + id).appendChild(card);
-
 }
 
 function renderRes(res, id) {
@@ -85,8 +120,9 @@ function renderRes(res, id) {
 }
 
 function renderHand(hand, id) {
-    document.getElementById("hand" + id).innerHTML = "";
-    document.getElementById("hand" + id).className = "hand";
+    let hand_element = document.getElementById("hand" + id);
+    hand_element.innerHTML = "";
+    hand_element.className = "hand";
 
     for (i = 0; i < hand.length; i++) {
         let card = document.createElement("div");
@@ -96,10 +132,12 @@ function renderHand(hand, id) {
         value.innerHTML = hand[i].Value;
         card.appendChild(value);
 
-        document.getElementById('hand' + id).appendChild(card);
+        hand_element.appendChild(card);
     }
 
 }
+
+// mouse event listeners
 
 function checkClick(e, deck, res, hand, id) {
     if (!e) var e = window.event;
@@ -117,12 +155,13 @@ document.addEventListener('contextmenu', e => {
 })
 
 
+// can put this all in one listener as stage init logic
 let deck1 = getDeck();
 let deck2 = getDeck();
 shuffle(deck1, 1);
 shuffle(deck2, 2);
 document.addEventListener('DOMContentLoaded', renderDeck(deck1, 1))
 document.addEventListener('DOMContentLoaded', renderDeck(deck2, 2))
+document.addEventListener('DOMContentLoaded', renderHand(hand1, 1))
+document.addEventListener('DOMContentLoaded', renderHand(hand2, 2))
 
-eDeck1.addEventListener("mouseup", (event) => checkClick(event, deck1, res1, hand1, 1));
-eDeck2.addEventListener("mouseup", (event) => checkClick(event, deck2, res2, hand2, 2));

@@ -26,6 +26,7 @@ body {
     background-color: lightblue;
     align-items: flex-end;
     justify-content: center;
+    overflow: auto;
 }
 .col-3 {
     display: flex;
@@ -76,6 +77,7 @@ body {
 
 .hand {
     display: flex;
-    max-width: 100%;
+    justify-content: center;
+    width: 100%;
     overflow-x: scroll;
 }
