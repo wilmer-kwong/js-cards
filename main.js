@@ -52,19 +52,6 @@ function drawCard(deck, hand, id) {
     }
 }
 
-function addDragEventListeners(element, id) {
-    element.addEventListener("dragover", (e) => e.preventDefault());
-    element.addEventListener("drop", (e) => {
-        e.preventDefault();
-        if (id == 1) {
-            drawCard(deck1, hand1, 1);
-        } else {
-            drawCard(deck2, hand2, 2);
-        }
-        element.setAttribute('drop', 'true');
-    })
-}
-
 function renderDeck(deck, id) {
     document.getElementById('deck' + id).innerHTML = "";
     let card = document.createElement("div");
