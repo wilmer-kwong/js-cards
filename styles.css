@@ -18,12 +18,13 @@ body {
 }
 .col-1 {
     display: flex;
-    flex: 0 1 auto;
+    flex: 1;
     width: 20%;
 }
 .col-2 {
     display: flex;
-    flex: 1 1 auto;
+    flex: 1;
+    flex-basis: 40%;
     background-color: lightblue;
     align-items: flex-end;
     justify-content: center;
@@ -31,6 +32,7 @@ body {
 }
 .col-3 {
     display: flex;
+    flex: 1;
     flex-direction: column;
     width: 20%;
     overflow: auto;
@@ -56,8 +58,8 @@ body {
     justify-content: center;
     border: solid 1px #aaa;
     border-radius: 9px;
-    width: 8vw;
-    height: 14vh;
+    width: 100px;
+    height: 140px;
     background-color: darkgray;
     padding: 3px 3px 3px 3px;
     float: left;
@@ -68,11 +70,19 @@ body {
     font-family: sans-serif;
 }
 
+.card-wrap {
+    min-width: 40px;
+    height: auto;
+}
+
+.card-wrap:hover {
+    min-width: 110px;
+}
+
 .hand-zone {
-    display: flex;
     background-color: aliceblue;
     height: 18vh;
-    width: 40%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -85,14 +95,13 @@ body {
 }
 
 .stock {
-    background-color: lightblue;
     width: 100%;
-    height: 50%;
 }
 
 .res {
+    background-color: gray;
     display: flex;
     overflow: auto;
     width: 100%;
-    height: 50%;
+    height: 100%;
 }

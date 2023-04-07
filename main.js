@@ -2,11 +2,15 @@ let eDeck1 = document.getElementById("deck1");
 let eDeck2 = document.getElementById("deck2");
 let hand1_element = document.getElementById("hand1");
 let hand2_element = document.getElementById("hand2");
+let res1_element = document.getElementById("res1");
+let res2_element = document.getElementById("res2");
 
 res1 = [];
 res2 = [];
 hand1 = [];
 hand2 = [];
+stock1 = [];
+stock2 = [];
 
 function getDeck() {
     let deck = new Array();
@@ -52,29 +56,22 @@ function drawCard(deck, hand, id) {
     }
 }
 
+// render methods
+
 function renderDeck(deck, id) {
     document.getElementById('deck' + id).innerHTML = "";
     let card = document.createElement("div");
+
+    // handle drag
     card.draggable = true;
+    card.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("Text", e.target.parentElement.id);
+    })
+
+    // handle clicks
     if (id === 1) {
-        if (!hand1_element.hasAttribute('listenerOnDrop')) {
-            hand1_element.addEventListener("dragover", (e) => e.preventDefault());
-            hand1_element.addEventListener("drop", (e) => {
-                e.preventDefault();
-                drawCard(deck1, hand1, 1);
-            })
-            hand1_element.setAttribute('listenerOnDrop', 'true');
-        }
         card.addEventListener("mouseup", (e) => checkClick(e, deck1, res1, hand1, 1));
     } else {
-        if (!hand2_element.hasAttribute('listenerOnDrop')) {
-            hand2_element.addEventListener("dragover", (e) => e.preventDefault());
-            hand2_element.addEventListener("drop", (e) => {
-                e.preventDefault();
-                drawCard(deck2, hand2, 2);
-            })
-            hand2_element.setAttribute('listenerOnDrop', 'true');
-        }
         card.addEventListener("mouseup", (e) => checkClick(e, deck2, res2, hand2, 2));
     }
    
@@ -82,6 +79,7 @@ function renderDeck(deck, id) {
         // render just the top card
         let value = document.createElement("div");
         card.className = "card";
+        card.id = deck[0].Value;
         value.className = "value";
         value.innerHTML = deck[0].Value;
         card.appendChild(value);
@@ -92,17 +90,23 @@ function renderDeck(deck, id) {
 }
 
 function renderRes(res, id) {
-    document.getElementById('res' + id).innerHTML = "";
+    let target_element = document.getElementById('res' + id);
+
+
+    target_element.innerHTML = "";
+
 
     for (let i = 0; i < res.length; i++) {
+        let cardWrap = document.createElement("div");
         let card = document.createElement("div");
         let value = document.createElement("div");
+        cardWrap.className = "card-wrap";
         card.className = "card";
         value.className = "value";
         value.innerHTML = res[i].Value;
         card.appendChild(value);
-
-        document.getElementById('res' + id).appendChild(card);
+        cardWrap.appendChild(card);
+        target_element.appendChild(cardWrap);
     }
 }
 
@@ -124,6 +128,25 @@ function renderHand(hand, id) {
 
 }
 
+function renderStock(stock, id) {
+    let stock_element = document.getElementById("stock" + id);
+    stock_element.innerHTML = "";
+
+    let card = document.createElement("div");
+    
+    if (stock.length > 0) {
+        let value = document.createElement("div");
+        card.className = "card";
+        card.id = stock[0].Value;
+        value.className = "value";
+        value.innerHTML = stock[0].Value;
+        card.appendChild(value);
+    } else {
+        card.className = "empty-card";
+    }
+    stock_element.appendChild(card);
+}
+
 // mouse event listeners
 
 function checkClick(e, deck, res, hand, id) {
@@ -133,6 +156,20 @@ function checkClick(e, deck, res, hand, id) {
     } else if (e.which == 3) {
         deal(deck, res, id);
     }
+}
+
+function addDropListeners() {
+    hand1_element.addEventListener("dragover", (e) => e.preventDefault());
+    hand1_element.addEventListener("drop", (e) => {
+        const data = e.dataTransfer.getData("Text");
+        if (data == 'deck1') drawCard(deck1, hand1, 1);
+    });
+
+    hand2_element.addEventListener("dragover", (e) => e.preventDefault());
+    hand2_element.addEventListener("drop", (e) => {
+        const data = e.dataTransfer.getData("Text");
+        if (data == 'deck2') drawCard(deck2, hand2, 2);
+    });
 }
 
 // disable right clicks
@@ -149,4 +186,10 @@ document.addEventListener('DOMContentLoaded', shuffle(deck1, 1));
 document.addEventListener('DOMContentLoaded', shuffle(deck2, 2));
 document.addEventListener('DOMContentLoaded', renderHand(hand1, 1));
 document.addEventListener('DOMContentLoaded', renderHand(hand2, 2));
-
+addDropListeners();
+renderStock(stock1, 1);
+renderStock(stock2, 2);
+for (let i = 0; i < 5; i++) {
+    drawCard(deck1, hand1, 1);
+    drawCard(deck2, hand2, 2);
+}
