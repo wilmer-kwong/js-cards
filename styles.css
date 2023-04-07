@@ -8,11 +8,11 @@ body {
     height: 50%;
     width: auto;
 }
-.top-row {
+.row-2 {
     display: flex;
     flex: 1 1 auto;
 }
-.bot-row {
+.row-1 {
     display: flex;
     flex: 0 1 auto;
 }
@@ -38,12 +38,13 @@ body {
 
 .card {
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     border: solid 1px #aaa;
     border-radius: 9px;
-    width: 8vw;
-    height: 14vh;
+    width: 100px;
+    height: 140px;
     background-color: white;
     padding: 3px 3px 3px 3px;
     float: left;

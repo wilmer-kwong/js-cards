@@ -145,10 +145,8 @@ document.addEventListener('contextmenu', e => {
 // can put this all in one listener as stage init logic
 let deck1 = getDeck();
 let deck2 = getDeck();
-shuffle(deck1, 1);
-shuffle(deck2, 2);
-document.addEventListener('DOMContentLoaded', renderDeck(deck1, 1))
-document.addEventListener('DOMContentLoaded', renderDeck(deck2, 2))
-document.addEventListener('DOMContentLoaded', renderHand(hand1, 1))
-document.addEventListener('DOMContentLoaded', renderHand(hand2, 2))
+document.addEventListener('DOMContentLoaded', shuffle(deck1, 1));
+document.addEventListener('DOMContentLoaded', shuffle(deck2, 2));
+document.addEventListener('DOMContentLoaded', renderHand(hand1, 1));
+document.addEventListener('DOMContentLoaded', renderHand(hand2, 2));
 
