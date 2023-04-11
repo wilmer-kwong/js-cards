@@ -57,6 +57,16 @@ function resToClock(res, clock, i) {
     }
 }
 
+function makeCard(card) {
+    let cardElement = document.createElement("div");
+    let value = document.createElement("div");
+    cardElement.className = "card";
+    value.className = "value";
+    value.innerHTML = card.value;
+    cardElement.appendChild(value);
+    return cardElement;
+}
+
 // render methods
 function renderDeck(deck) {
     let id = (deck == deck1) ? 1 : 2;
@@ -78,9 +88,9 @@ function renderDeck(deck) {
         // render just the top card
         let value = document.createElement("div");
         card.className = "card";
-        card.id = deck.peak().Value;
+        card.id = deck.peak().value;
         value.className = "value";
-        value.innerHTML = deck.peak().Value;
+        value.innerHTML = deck.peak().value;
         card.appendChild(value);
     } else {
         card.className = "empty-card";
@@ -95,8 +105,8 @@ function renderRes(res) {
 
     for (let i = 0; i < res.length; i++) {
         let cardWrap = document.createElement("div");
-        let card = document.createElement("div");
-        let value = document.createElement("div");
+        cardWrap.className = "card-wrap";
+        let card = makeCard(res[i]);
 
         // click handlers
         if (id === 1) {
@@ -120,11 +130,6 @@ function renderRes(res) {
             });
         }
 
-        cardWrap.className = "card-wrap";
-        card.className = "card";
-        value.className = "value";
-        value.innerHTML = res[i].Value;
-        card.appendChild(value);
         cardWrap.appendChild(card);
         target_element.appendChild(cardWrap);
     }
@@ -137,13 +142,7 @@ function renderHand(hand) {
     hand_element.className = "hand-" + id;
 
     for (let i = 0; i < hand.length; i++) {
-        let card = document.createElement("div");
-        let value = document.createElement("div");
-        card.className = "card";
-        value.className = "value";
-        value.innerHTML = hand[i].Value;
-        card.appendChild(value);
-
+        let card = makeCard(hand[i]);
         hand_element.appendChild(card);
     }
 }
@@ -155,13 +154,8 @@ function renderClock(clock) {
 
     for (let i = 0; i < clock.length; i++) {
         let cardWrap = document.createElement("div");
-        let card = document.createElement("div");
-        let value = document.createElement("div");
         cardWrap.className = "card-wrap";
-        card.className = "card";
-        value.className = "value";
-        value.innerHTML = clock[i].Value;
-        card.appendChild(value);
+        let card = makeCard(clock[i]);
         cardWrap.appendChild(card);
         clock_element.appendChild(cardWrap);
     }
@@ -177,7 +171,7 @@ function renderStock(stock) {
     if (stock.length > 0) {
         let value = document.createElement("div");
         card.className = "card";
-        card.id = stock[stock.length-1].Value;
+        card.id = stock[stock.length-1].value;
         value.className = "value";
         value.innerHTML = stock.length;
         card.appendChild(value);

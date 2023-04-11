@@ -1,3 +1,5 @@
+import Card from "./card.js";
+
 export default class Deck {
     // cards[]
     constructor(numCards) {
@@ -7,7 +9,7 @@ export default class Deck {
     deckInit(numCards) {
         let cards = new Array();
         for (let i = 0; i < numCards; i++) {
-            let card = {Value: (i + 1)};
+            let card = new Card(i);
             cards.push(card);
         }
         return cards;
