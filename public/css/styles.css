@@ -1,11 +1,15 @@
-body {
+*, body {
     padding: 0;
     margin: 0;
 }
+.player2 {
+    transform: rotateX(180deg);
+}
+
 .playing-field {
     display: flex;
     flex-direction: column;
-    height: 50%;
+    height: 50vh;
     width: auto;
 }
 .row-2 {
@@ -89,7 +93,7 @@ body {
     margin-right: auto;
 }
 
-.hand-1 {
+.hand-2 {
     display: flex;
     justify-content: center;
     width: 100%;
@@ -97,7 +101,7 @@ body {
     transform: rotateX(180deg);
 }
 
-.hand-2 {
+.hand-1 {
     display: flex;
     justify-content: center;
     width: 100%;

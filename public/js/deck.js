@@ -8,7 +8,7 @@ export default class Deck {
 
     deckInit(numCards) {
         let cards = new Array();
-        for (let i = 0; i < numCards; i++) {
+        for (let i = 1; i <= numCards; i++) {
             let card = new Card(i);
             cards.push(card);
         }

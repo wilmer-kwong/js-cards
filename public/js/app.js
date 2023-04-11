@@ -1,5 +1,7 @@
 import Deck from './deck.js';
 
+let deck1 = new Deck(50);
+let deck2 = new Deck(50);
 let res1 = [];
 let res2 = [];
 let hand1 = [];
@@ -57,7 +59,8 @@ function resToClock(res, clock, i) {
     }
 }
 
-function makeCard(card) {
+function makeCardElement(card) {
+    if (!card) return null;
     let cardElement = document.createElement("div");
     let value = document.createElement("div");
     cardElement.className = "card";
@@ -71,28 +74,21 @@ function makeCard(card) {
 function renderDeck(deck) {
     let id = (deck == deck1) ? 1 : 2;
     let deck_element = document.getElementById("deck" + id);
-
     deck_element.innerHTML = "";
-    let card = document.createElement("div");
 
-    // handle drag
-    card.draggable = true;
-    card.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("Text", e.target.parentElement.id);
-    })
+    let top_card = deck.peak();
 
-    // handle clicks
-    card.addEventListener("mouseup", (e) => checkClick(e, deck));
-
-    if (deck.len() > 0) {
-        // render just the top card
-        let value = document.createElement("div");
-        card.className = "card";
-        card.id = deck.peak().value;
-        value.className = "value";
-        value.innerHTML = deck.peak().value;
-        card.appendChild(value);
+    let card = makeCardElement(top_card);
+    if (card) {
+        // handle drag
+        card.draggable = true;
+        card.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("Text", e.target.parentElement.id);
+        })
+        // handle clicks
+        card.addEventListener("mouseup", (e) => checkClick(e, deck));
     } else {
+        card = document.createElement("div");
         card.className = "empty-card";
     }
     deck_element.appendChild(card);
@@ -106,8 +102,9 @@ function renderRes(res) {
     for (let i = 0; i < res.length; i++) {
         let cardWrap = document.createElement("div");
         cardWrap.className = "card-wrap";
-        let card = makeCard(res[i]);
+        let card = makeCardElement(res[i]);
 
+        // to-do: do the click event check first, saves some lines
         // click handlers
         if (id === 1) {
             card.addEventListener("mouseup", (e) => {
@@ -123,9 +120,9 @@ function renderRes(res) {
             card.addEventListener("mouseup", (e) => {
                 if (!e) var e = window.event;
                 if (e.which == 1) {
-                    resToStock(res2, stock2, 2, i);
+                    resToStock(res2, stock2, i);
                 } else if (e.which == 3) {
-                    // to-do: resToClock();
+                    resToClock(res2, clock2, i);
                 }
             });
         }
@@ -142,7 +139,7 @@ function renderHand(hand) {
     hand_element.className = "hand-" + id;
 
     for (let i = 0; i < hand.length; i++) {
-        let card = makeCard(hand[i]);
+        let card = makeCardElement(hand[i]);
         hand_element.appendChild(card);
     }
 }
@@ -155,7 +152,7 @@ function renderClock(clock) {
     for (let i = 0; i < clock.length; i++) {
         let cardWrap = document.createElement("div");
         cardWrap.className = "card-wrap";
-        let card = makeCard(clock[i]);
+        let card = makeCardElement(clock[i]);
         cardWrap.appendChild(card);
         clock_element.appendChild(cardWrap);
     }
@@ -166,16 +163,13 @@ function renderStock(stock) {
     let stock_element = document.getElementById("stock" + id);
     stock_element.innerHTML = "";
 
-    let card = document.createElement("div");
+    let card;
     
     if (stock.length > 0) {
-        let value = document.createElement("div");
-        card.className = "card";
-        card.id = stock[stock.length-1].value;
-        value.className = "value";
-        value.innerHTML = stock.length;
-        card.appendChild(value);
+        card = makeCardElement(stock[stock.length-1]);
+        card.children[0].innerHTML = stock.length;
     } else {
+        card = document.createElement("div");
         card.className = "empty-card";
     }
     stock_element.appendChild(card);
@@ -215,9 +209,7 @@ document.addEventListener('contextmenu', e => {
 })
 
 
-// can put this all in one listener as stage init logic
-let deck1 = new Deck(50);
-let deck2 = new Deck(50);
+// stage init
 document.addEventListener('DOMContentLoaded', () => {
     deck1.shuffle();
     deck2.shuffle();
@@ -225,6 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCard(deck1);
         drawCard(deck2);
     }
+
+    // render init
+    renderStock(stock1);
+    renderStock(stock2);
+    renderRes(res1);
+    renderRes(res2);
+
     // shuffle event handlers
     document.getElementById('shuffle1').addEventListener('click', () => {
         deck1.shuffle();
@@ -234,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         deck2.shuffle();
         renderDeck(deck2);
     });
+
+    // drag-drop event handlers
+    addDropListeners();
 });
-addDropListeners();
-renderStock(stock1, 1);
-renderStock(stock2, 2);
