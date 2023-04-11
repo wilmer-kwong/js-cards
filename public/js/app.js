@@ -1,75 +1,68 @@
-let eDeck1 = document.getElementById("deck1");
-let eDeck2 = document.getElementById("deck2");
-let hand1_element = document.getElementById("hand1");
-let hand2_element = document.getElementById("hand2");
-let res1_element = document.getElementById("res1");
-let res2_element = document.getElementById("res2");
+import Deck from './deck.js';
 
-res1 = [];
-res2 = [];
-hand1 = [];
-hand2 = [];
-stock1 = [];
-stock2 = [];
-
-function getDeck() {
-    let deck = new Array();
-    for (let i = 0; i < 50; i++) {
-        let card = {Value: (i + 1)};
-        deck.push(card);
-    }
-    return deck;
-}
-
-function shuffle(deck, id) {
-    const SHUFFLE_FACTOR = 1000;
-    for (let i = 0; i < SHUFFLE_FACTOR; i++) {
-        let i = Math.floor((Math.random() * deck.length));
-        let j = Math.floor((Math.random() * deck.length));
-
-        // in the extremely unlikely scenario that the two indexes
-        // are the same, re-shuffle
-        while (j == i) {
-            j = Math.floor((Math.random() * deck.length));
-        }
-        let tmp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = tmp;
-    }
-    renderDeck(deck, id);
-}
+let res1 = [];
+let res2 = [];
+let hand1 = [];
+let hand2 = [];
+let stock1 = [];
+let stock2 = [];
+let clock1 = [];
+let clock2 = [];
 
 // card movement functions
-
-function deal(deck, res, id) {
-    if (deck.length > 0) {
-        res.push(deck.shift());
-        renderDeck(deck, id);
-        renderRes(res, id);
+function deal(deck) {
+    let dealtCard = deck.pop();
+    if (dealtCard) {
+        if (deck == deck1) {
+            res1.push(dealtCard);
+            renderDeck(deck);
+            renderRes(res1);
+        } else {
+            res2.push(dealtCard);
+            renderDeck(deck);
+            renderRes(res2);
+        }
     }
 }
 
 // to-do: little bit of boiler plate here, maybe can encapsulate
-function drawCard(deck, hand, id) {
-    if (deck.length > 0) {
-        hand.push(deck.shift());
-        renderDeck(deck, id);
-        renderHand(hand, id);
+function drawCard(deck) {
+    let drawnCard = deck.pop();
+    if (drawnCard) {
+        if (deck == deck1) {
+            hand1.push(drawnCard);
+            renderDeck(deck);
+            renderHand(hand1);
+        } else {
+            hand2.push(drawnCard);
+            renderDeck(deck);
+            renderHand(hand2);
+        }
     }
 }
 
-function resToStock(res, stock, id, i) {
+function resToStock(res, stock, i) {
     if (res.length > 0) {
         stock.push(res.splice(i, 1)[0]);
-        renderRes(res, id);
-        renderStock(stock, id);
+        renderRes(res);
+        renderStock(stock);
+    }
+}
+
+function resToClock(res, clock, i) {
+    if (res.length > 0) {
+        clock.push(res.splice(i, 1)[0]);
+        renderRes(res);
+        renderClock(clock);
     }
 }
 
 // render methods
+function renderDeck(deck) {
+    let id = (deck == deck1) ? 1 : 2;
+    let deck_element = document.getElementById("deck" + id);
 
-function renderDeck(deck, id) {
-    document.getElementById('deck' + id).innerHTML = "";
+    deck_element.innerHTML = "";
     let card = document.createElement("div");
 
     // handle drag
@@ -79,27 +72,24 @@ function renderDeck(deck, id) {
     })
 
     // handle clicks
-    if (id === 1) {
-        card.addEventListener("mouseup", (e) => checkClick(e, deck1, res1, hand1, 1));
-    } else {
-        card.addEventListener("mouseup", (e) => checkClick(e, deck2, res2, hand2, 2));
-    }
-   
-    if (deck.length > 0) {
+    card.addEventListener("mouseup", (e) => checkClick(e, deck));
+
+    if (deck.len() > 0) {
         // render just the top card
         let value = document.createElement("div");
         card.className = "card";
-        card.id = deck[0].Value;
+        card.id = deck.peak().Value;
         value.className = "value";
-        value.innerHTML = deck[0].Value;
+        value.innerHTML = deck.peak().Value;
         card.appendChild(value);
     } else {
         card.className = "empty-card";
     }
-    document.getElementById('deck' + id).appendChild(card);
+    deck_element.appendChild(card);
 }
 
-function renderRes(res, id) {
+function renderRes(res) {
+    let id = (res == res1) ? 1 : 2;
     let target_element = document.getElementById('res' + id);
     target_element.innerHTML = "";
 
@@ -114,9 +104,9 @@ function renderRes(res, id) {
                 console.log(e);
                 if (!e) var e = window.event;
                 if (e.which == 1) {
-                    resToStock(res1, stock1, 1, i);
+                    resToStock(res1, stock1, i);
                 } else if (e.which == 3) {
-                    // to-do: resToClock();
+                    resToClock(res1, clock1, i);
                 }
             });
         } else {
@@ -140,12 +130,13 @@ function renderRes(res, id) {
     }
 }
 
-function renderHand(hand, id) {
+function renderHand(hand) {
+    let id = (hand == hand1) ? 1 : 2;
     let hand_element = document.getElementById("hand" + id);
     hand_element.innerHTML = "";
-    hand_element.className = "hand";
+    hand_element.className = "hand-" + id;
 
-    for (i = 0; i < hand.length; i++) {
+    for (let i = 0; i < hand.length; i++) {
         let card = document.createElement("div");
         let value = document.createElement("div");
         card.className = "card";
@@ -155,10 +146,29 @@ function renderHand(hand, id) {
 
         hand_element.appendChild(card);
     }
-
 }
 
-function renderStock(stock, id) {
+function renderClock(clock) {
+    let id = (clock == clock1) ? 1 : 2;
+    let clock_element = document.getElementById("clock" + id);
+    clock_element.innerHTML = "";
+
+    for (let i = 0; i < clock.length; i++) {
+        let cardWrap = document.createElement("div");
+        let card = document.createElement("div");
+        let value = document.createElement("div");
+        cardWrap.className = "card-wrap";
+        card.className = "card";
+        value.className = "value";
+        value.innerHTML = clock[i].Value;
+        card.appendChild(value);
+        cardWrap.appendChild(card);
+        clock_element.appendChild(cardWrap);
+    }
+}
+
+function renderStock(stock) {
+    let id = (stock == stock1) ? 1 : 2;
     let stock_element = document.getElementById("stock" + id);
     stock_element.innerHTML = "";
 
@@ -179,16 +189,19 @@ function renderStock(stock, id) {
 
 // mouse event listeners
 
-function checkClick(e, deck, res, hand, id) {
+function checkClick(e, deck, deck_element) {
     if (!e) var e = window.event;
     if (e.which == 1) {
-        drawCard(deck, hand, id);
+        drawCard(deck);
     } else if (e.which == 3) {
-        deal(deck, res, id);
+        deal(deck);
     }
 }
 
 function addDropListeners() {
+    let hand1_element = document.getElementById("hand1");
+    let hand2_element = document.getElementById("hand2");
+
     hand1_element.addEventListener("dragover", (e) => e.preventDefault());
     hand1_element.addEventListener("drop", (e) => {
         const data = e.dataTransfer.getData("Text");
@@ -203,23 +216,31 @@ function addDropListeners() {
 }
 
 // disable right clicks
-
 document.addEventListener('contextmenu', e => {
     e.preventDefault();
 })
 
 
 // can put this all in one listener as stage init logic
-let deck1 = getDeck();
-let deck2 = getDeck();
-document.addEventListener('DOMContentLoaded', shuffle(deck1, 1));
-document.addEventListener('DOMContentLoaded', shuffle(deck2, 2));
-document.addEventListener('DOMContentLoaded', renderHand(hand1, 1));
-document.addEventListener('DOMContentLoaded', renderHand(hand2, 2));
+let deck1 = new Deck(50);
+let deck2 = new Deck(50);
+document.addEventListener('DOMContentLoaded', () => {
+    deck1.shuffle();
+    deck2.shuffle();
+    for (let i = 0; i < 5; i++) {
+        drawCard(deck1);
+        drawCard(deck2);
+    }
+    // shuffle event handlers
+    document.getElementById('shuffle1').addEventListener('click', () => {
+        deck1.shuffle();
+        renderDeck(deck1);
+    });
+    document.getElementById('shuffle2').addEventListener('click', () => {
+        deck2.shuffle();
+        renderDeck(deck2);
+    });
+});
 addDropListeners();
 renderStock(stock1, 1);
 renderStock(stock2, 2);
-for (let i = 0; i < 5; i++) {
-    drawCard(deck1, hand1, 1);
-    drawCard(deck2, hand2, 2);
-}
