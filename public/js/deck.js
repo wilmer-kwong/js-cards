@@ -1,8 +1,41 @@
 import Card from "./card.js";
 
-export default class Deck {
+export class CardPile {
+    constructor() {
+        this.cards = [];
+    }
+    // getter/setter
+    get cards() {
+        return this._cards;
+    }
+    set cards(cards) {
+        this._cards = cards;
+    }
+    // methods
+    len() {
+        return this._cards.length;
+    }
+    peak() {
+        return this._cards[0];
+    }
+    peakBack() {
+        return this._cards[this._cards.length-1];
+    }
+    splice(i) {
+        return this.cards.length > 0 ? this.cards.splice(i, 1)[0] : null;
+    }
+    push(card) {
+        this._cards.push(card);
+    }
+    getCardAt(i) {
+        return (i < this._cards.length) ? this.cards[i] : null;
+    }
+}
+
+export class Deck extends CardPile {
     // cards[]
     constructor(numCards) {
+        super();
         this.cards = this.deckInit(numCards);
     }
 
@@ -14,24 +47,6 @@ export default class Deck {
         }
         return cards;
     }
-
-    // getter
-    get cards() {
-        return this._cards;
-    }
-
-    set cards(newCards) {
-        this._cards = newCards;
-    }
-
-    len() {
-        return this._cards.length;
-    }
-
-    peak() {
-        return this._cards[0];
-    }
-
     // methods
     shuffle() {
         const SHUFFLE_FACTOR = 1000;
@@ -48,9 +63,5 @@ export default class Deck {
             this.cards[i] = this.cards[j];
             this.cards[j] = tmp;
         }
-    }
-
-    pop() {
-        return this.cards.length > 0 ? this.cards.shift() : null;
     }
 }

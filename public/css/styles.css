@@ -19,6 +19,7 @@
 .row-1 {
     display: flex;
     flex: 0 1 auto;
+    max-height: 148px;
 }
 .col-1 {
     display: inline-flex;
@@ -44,6 +45,7 @@
 
 .row-1 .col-3 {
     flex-direction: row;
+    overflow: hidden;
 }
 
 .card {
@@ -127,11 +129,18 @@
     display: flex;
     overflow: auto;
     width: 100%;
-    min-height: 165px;
-    overflow-x: scroll;
+    max-height: 148px;
+    overflow: hidden;
 }
 
 .level {
+    display: flex;
+    flex-direction: row;
     background-color: blueviolet;
-    min-width: 140px;
+    transform: rotate(-90deg) translate(0,100%);
+    transform-origin: bottom left;
+    height: 148px;
+    min-width: 148px;
+    max-width: 148px;
+    overflow: hidden;
 }
