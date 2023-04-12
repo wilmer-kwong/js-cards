@@ -144,3 +144,29 @@
     max-width: 148px;
     overflow: hidden;
 }
+
+/* Board classes */
+.board {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    width: 100%;
+    height: 100%;
+}
+
+.center-stage {
+    display: flex;
+    background-color: teal;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: calc(100% / 4);
+}
+.back-stage {
+    display: flex;
+    background-color: pink;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: calc(100% / 5);
+}
