@@ -5,13 +5,14 @@ import {
 
 let deck1 = p1_zones.deck_zone._listObj;
 
-//let deck2 = p1_zones.deck_zone._listObj;
-
+/*
+let deck2 = p1_zones.deck_zone._listObj;
 let gy2 = [];
 let res2 = [];
 let hand2 = [];
 let stock2 = [];
 let clock2 = [];
+*/
 
 deck1.shuffle();
 p1_zones.deck_zone.render();
@@ -40,6 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('resToWR1').addEventListener('click', () => {
         for (let i = p1_zones['res_zone'].listObj.len(); i >= 0; i--) {
             moveCardFromZone(p1_zones['res_zone'], p1_zones['grave_zone'], i);
+        }
+    })
+    // modal open
+    var modal1 = document.getElementById('deckModal1');
+    document.getElementById('viewDeck1').addEventListener('click', () => {
+        p1_zones.deck_modal_zone.render();
+        document.getElementById('deckModal1').style.display = 'flex';
+    })
+    // modal close
+    document.getElementById('close1').addEventListener('click', () => {
+        document.getElementById('deckModal1').style.display = 'none';
+    })
+    window.addEventListener('click', (e) => {
+        if (e.target == modal1) {
+            modal1.style.display = 'none';
         }
     })
 

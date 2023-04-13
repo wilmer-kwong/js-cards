@@ -173,6 +173,19 @@ export class GraveZone extends Zone {
     }
 }
 
+export class ModalZone extends Zone {
+    constructor(listObj, element) {
+        super(listObj, element);
+    }
+    render() {
+        this._element.innerHTML = "";
+        for (let i = 0; i < this._listObj.len(); i++) {
+            let card = makeCardElement(this._listObj.getCardAt(i));
+            this._element.appendChild(card);
+        }
+    }
+}
+
 // all of these functions above should be refactored into
 // a general function: from zome -> zone.
 
@@ -211,6 +224,7 @@ let level1 = new CardPile();
 let clock1 = new CardPile();
 
 let deck_zone_1 = new DeckZone(deck1, document.getElementById('deck1'));
+let deck_modal_zone_1 = new ModalZone(deck1, document.getElementById('deckModalContent1'));
 let hand_zone_1 = new HandZone(hand1, document.getElementById('hand1'));
 let res_zone_1 = new ResZone(res1, document.getElementById('res1'));
 let stock_zone_1 = new StockZone(stock1, document.getElementById('stock1'));
@@ -220,6 +234,7 @@ let grave_zone_1 = new GraveZone(gy1, document.getElementById('gy1'));
 
 export var p1_zones = {
     'deck_zone': deck_zone_1,
+    'deck_modal_zone': deck_modal_zone_1,
     'hand_zone': hand_zone_1,
     'res_zone': res_zone_1,
     'stock_zone': stock_zone_1,

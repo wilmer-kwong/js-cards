@@ -1,4 +1,4 @@
-*, body {
+* {
     padding: 0;
     margin: 0;
 }
@@ -169,4 +169,57 @@
     justify-content: center;
     align-items: center;
     gap: calc(100% / 5);
+}
+
+/* Modal Classes */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content/Box */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    max-height: 80%;
+    width: 80%;
+    overflow: auto;
+}
+
+.modal-content .modal-content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    height: auto;
+}
+
+/* The Close Button */
+.close {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    color: #fff;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    background-color: darkgray;
+    text-decoration: none;
+    cursor: pointer;
 }
