@@ -27,6 +27,9 @@ export class CardPile {
     push(card) {
         this._cards.push(card);
     }
+    push(card, i) {
+        this._cards.splice(i, 0, card);
+    }
     getCardAt(i) {
         return (i < this._cards.length) ? this.cards[i] : null;
     }
