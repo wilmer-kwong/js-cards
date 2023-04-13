@@ -45,6 +45,9 @@ export class DeckZone extends Zone {
                 if (!e) var e = window.event;
                 if (e.button == 0) {
                     moveCardFromZone(this, p1_zones['hand_zone']);
+                } else if (e.button == 1) {
+                    deck_modal_zone_1.render();
+                    document.getElementById('deckModal1').style.display = 'flex';
                 } else if (e.button == 2) {
                     moveCardFromZone(this, p1_zones['res_zone']);
                 }
@@ -157,19 +160,23 @@ export class LevelZone extends Zone {
 }
 
 export class GraveZone extends Zone {
-    constructor(listObj, element) {
+    constructor(listObj, element, modalElement) {
         super(listObj, element);
+        this.modalElement = modalElement;
     }
     render() {
         this._element.innerHTML = "";
         let card = makeCardElement(this._listObj.peakBack());
         if (card) {
-            //
         } else {
             card = document.createElement('div');
             card.className = 'empty-card';
         }
         this._element.appendChild(card);
+        card.addEventListener('click', () => {
+            grave_modal_zone_1.render();
+            this.modalElement.style.display = 'flex';
+        })
     }
 }
 
@@ -230,7 +237,8 @@ let res_zone_1 = new ResZone(res1, document.getElementById('res1'));
 let stock_zone_1 = new StockZone(stock1, document.getElementById('stock1'));
 let clock_zone_1 = new ClockZone(clock1, document.getElementById('clock1'));
 let level_zone_1 = new LevelZone(level1, document.getElementById("level1"));
-let grave_zone_1 = new GraveZone(gy1, document.getElementById('gy1'));
+let grave_zone_1 = new GraveZone(gy1, document.getElementById('gy1'), document.getElementById('graveModal1'));
+let grave_modal_zone_1 = new ModalZone(gy1, document.getElementById('graveModalContent1'));
 
 export var p1_zones = {
     'deck_zone': deck_zone_1,
@@ -241,4 +249,5 @@ export var p1_zones = {
     'clock_zone': clock_zone_1,
     'level_zone': level_zone_1,
     'grave_zone': grave_zone_1,
+    'grave_modal_zone': grave_modal_zone_1,
 };

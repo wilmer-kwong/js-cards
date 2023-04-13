@@ -43,20 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
             moveCardFromZone(p1_zones['res_zone'], p1_zones['grave_zone'], i);
         }
     })
-    // modal open
-    var modal1 = document.getElementById('deckModal1');
+    // deck1 modal open
+    var deckModal1 = document.getElementById('deckModal1');
+    var graveModal1 = document.getElementById('graveModal1');
     document.getElementById('viewDeck1').addEventListener('click', () => {
         p1_zones.deck_modal_zone.render();
-        document.getElementById('deckModal1').style.display = 'flex';
+        deckModal1.style.display = 'flex';
     })
-    // modal close
+    // deck1 modal close
     document.getElementById('close1').addEventListener('click', () => {
-        document.getElementById('deckModal1').style.display = 'none';
+        deckModal1.style.display = 'none';
     })
+    // window close
     window.addEventListener('click', (e) => {
-        if (e.target == modal1) {
-            modal1.style.display = 'none';
+        if (e.target == deckModal1) {
+            deckModal1.style.display = 'none';
         }
+        if (e.target == graveModal1) {
+            graveModal1.style.display = 'none';
+        }
+    })
+    // gy1 modal close
+    document.getElementById('graveClose1').addEventListener('click', () => {
+        graveModal1.style.display = 'none';
     })
 
     // drag-drop event handlers
