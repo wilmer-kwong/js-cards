@@ -2,21 +2,52 @@ import {
     moveCardFromZone,
     p1_zones,
 } from './zone.js'
-import { postMessage } from './data/chat.js'
+import * as msgClient from './data/message.js'
+
+class Chat {
+    constructor(element) {
+        this.messages = [];
+        this.element = element;
+    }
+    // getter/setter
+    get messages() {
+        return this._messages;
+    }
+    set messages(msgs) {
+        this._messages = msgs;
+    }
+    get element() {
+        return this._element;
+    }
+    set element(ele) {
+        this._element = ele;
+    }
+    // methods
+    async fetchMessages() {
+        this._messages = await msgClient.getMessages();
+    }
+    async postMessage(msg) {
+        await msgClient.postMessage(msg)
+        .then(await this.fetchMessages())
+        .then(this.render());
+    }
+    render() {this._element.innerHTML = "";
+        this._messages.forEach((record) => {
+            let msg = document.createElement('div');
+            msg.className = 'chat-msg';
+            msg.innerHTML = record.message;
+            this._element.appendChild(msg);
+        })
+    }
+}
+
 
 let deck1 = p1_zones.deck_zone_1._obj;
+let chat = new Chat(document.getElementById('messages'));
 
-/*
-let deck2 = p1_zones.deck_zone._listObj;
-let gy2 = [];
-let res2 = [];
-let hand2 = [];
-let stock2 = [];
-let clock2 = [];
-*/
 
 // stage init
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     deck1.shuffle();
     for (let zone in p1_zones) {
         p1_zones[zone].render();
@@ -61,9 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
         graveModal1.style.display = 'none';
     })
 
-    document.getElementById('send').addEventListener('click', () => {
-        postMessage(document.getElementById('message').value);
+    document.getElementById('send').addEventListener('click', async () => {
+        await chat.postMessage(document.getElementById('sendText').value);
     })
+
+    await chat.fetchMessages();
+    chat.render();
 
     // drag-drop event handlers
     addDropListenerToElements(p1_zones);

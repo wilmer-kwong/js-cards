@@ -125,7 +125,6 @@ export class StockZone extends ListZone {
         super(obj, element);
     }
     render() {
-        console.log(this._obj);
         this._element.innerHTML = "";
         let card;
         if (this._obj.len() > 0) {
@@ -327,7 +326,6 @@ function zip(keys, values) {
     keys.forEach((k, i) => {
         obj[k] = values[i];
     })
-    console.log(obj);
     return obj;
 }
 

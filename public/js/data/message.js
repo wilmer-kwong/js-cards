@@ -1,5 +1,9 @@
 export async function getMessages() {
-    let res = await fetch('http://localhost:3000/messages');
+    let res = null
+    await fetch('http://localhost:3000/messages').then((data) => {
+        res = data.json();
+    })
+    .catch((err) => console.log(err));
     return res;
 }
 

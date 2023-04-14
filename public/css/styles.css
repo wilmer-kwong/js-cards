@@ -242,6 +242,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    align-items: center;
     background-color: lightcoral;
     max-width: inherit;
 }
@@ -252,4 +253,13 @@
 
 .text {
     width: 100%;
+}
+
+.chat-msg {
+    width: 100%;
+    margin: 3px 0;
+}
+
+.messages {
+    width: 80%;
 }
