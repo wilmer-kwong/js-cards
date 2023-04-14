@@ -3,8 +3,13 @@ const path = require('path')
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+if (process.env.NODE_ENV !== 'production') {
+    const dotenv = require('dotenv');
+    dotenv.config();
+}
+
 // database connect
-let dbUrl = "mongodb+srv://wilmerk:IdLlhyqYtsk3awfy@wscluster.ouosiqi.mongodb.net/Chat";
+let dbUrl = process.env.DB_URL;
 mongoose.connect(dbUrl).then(() => {
     console.log("Database connected successfully");
 }).catch((err) => {
