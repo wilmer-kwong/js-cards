@@ -1,0 +1,115 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <div class="player2">
+        <div class="playing-field">
+            <div class="row-2">
+                <div class="col-1">
+                    <div class="stock" id="stock2"></div>
+                    <div class="res" id="res2"></div>
+                </div>
+                <div class="col-2">
+                    
+                </div>
+                <div class="col-3">
+                    <div id="deck2"></div>
+                    <a href="javascript:void(0)" id="shuffle2" class="btn">Shuffle</a>
+                </div>
+            </div>
+            <div class="row-1">
+                <div class="col-1">
+                    <div class="level" id="level2"></div>
+                    <div class="clock" id="clock2"></div>
+                </div>
+                <div class="col-2">
+                    <div class="hand-zone">
+                        <div id="hand2"></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            chat
+        </div>
+    </div>
+
+    <div class="player1">
+        <div class="playing-field">
+            <div class="row-2">
+                <div class="col-1">
+                    <div>
+                        <div class="stock" id="stock_zone_1"></div>
+                        <a href="javascript:void(0)" id="resToWR1" class="btn">Send all to WR</a>
+                    </div>
+                    <div class="res" id="res_zone_1"></div>
+                </div>
+                <div class="col-2">
+                    <!-- Board -->
+                    <div class="board">
+                        <div class="center-stage">
+                            <div id="center_zone_1_1"></div>
+                            <div id="center_zone_1_2"></div>
+                            <div id="center_zone_1_3"></div>
+                        </div>
+                        <div class="back-stage">
+                            <div id="back_zone_1_1"></div>
+                            <div id="back_zone_1_2"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div id="deck_zone_1"></div>
+                    <a href="javascript:void(0)" id="shuffle1" class="btn">Shuffle</a>
+                    <a href="javascript:void(0)" id="viewDeck1" class="btn">View Deck</a>
+                </div>
+            </div>
+            <div class="row-1">
+                <div class="col-1">
+                    <div class="level" id="level_zone_1"></div>
+                    <div class="clock" id="clock_zone_1"></div>
+                </div>
+                <div class="col-2">
+                    <div class="hand-zone">
+                        <div id="hand_zone_1"></div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div id="grave_zone_1"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="chat-body">
+                <h1>Chat</h1>
+                <div id="messages">
+                    <!-- messages -->
+                </div>
+            </div>
+            <div class="chat-footer">
+                <textarea id="message" class="text" placeholder="Message"></textarea>
+                <button id="send" class="btn">Send</button>
+            </div>
+        </div>
+    </div>
+    <!-- Deck 1 Model -->
+    <div id="deckModal1" class="modal">
+        <div class="modal-content">
+            <div id="close1" class="close">&times; Close</div>
+            <div id="deck_modal_zone_1" class="modal-content"></div>
+        </div>
+    </div>
+    <!-- GY 1 Model -->
+    <div id="graveModal1" class="modal">
+        <div class="modal-content">
+            <div id="graveClose1" class="close">&times; Close</div>
+            <div id="grave_modal_zone_1" class="modal-content"></div>
+        </div>
+    </div>
+</body>
+<script type="module" src="static/js/app.js"></script>
+</html>
