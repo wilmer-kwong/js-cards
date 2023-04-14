@@ -1,7 +1,8 @@
 import { 
     moveCardFromZone,
     p1_zones,
-} from './zone.js';
+} from './zone.js'
+import { postMessage } from './data/chat.js'
 
 let deck1 = p1_zones.deck_zone_1._obj;
 
@@ -58,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // gy1 modal close
     document.getElementById('graveClose1').addEventListener('click', () => {
         graveModal1.style.display = 'none';
+    })
+
+    document.getElementById('send').addEventListener('click', () => {
+        postMessage(document.getElementById('message').value);
     })
 
     // drag-drop event handlers

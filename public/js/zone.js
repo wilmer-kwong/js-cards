@@ -25,10 +25,11 @@ export class ListZone {
     set id(id) {
         this._id = id;
     }
-    makeDraggable(card, name) {
+    makeDraggable(card, name, index=0) {
         card.draggable = true;
         card.addEventListener("dragstart", (e) => {
             e.dataTransfer.setData('srcName', name);
+            e.dataTransfer.setData('index', index);
         })
     }
 }
@@ -83,6 +84,13 @@ export class HandZone extends ListZone {
         for (let i = 0; i < this._obj.len(); i++) {
             let card = makeCardElement(this._obj.getCardAt(i));
             this._element.appendChild(card);
+            super.makeDraggable(card, this._element.id, i);
+        }
+        // temporary solution to fix empty hands
+        if (this._obj.len() <= 0) {
+            let card = document.createElement("div");
+            card.className = "empty-card";
+            this._element.appendChild(card);
         }
     }
 }
@@ -101,12 +109,13 @@ export class ResZone extends ListZone {
             // click handlers
             card.addEventListener('mouseup', (e) => {
                 if (!e) var e = window.event;
-                if (e.button == 0) moveCardFromZone(this, p1_zones['stock_zone'], i);
-                else moveCardFromZone(this, p1_zones['clock_zone'], i);
+                if (e.button == 0) moveCardFromZone(this, p1_zones['stock_zone_1'], i);
+                else moveCardFromZone(this, p1_zones['clock_zone_1'], i);
             })
-
             card_wrap.appendChild(card);
             this._element.appendChild(card_wrap);
+
+            super.makeDraggable(card, this._element.id, i);
         }
     }
 }
@@ -116,16 +125,30 @@ export class StockZone extends ListZone {
         super(obj, element);
     }
     render() {
+        console.log(this._obj);
         this._element.innerHTML = "";
         let card;
         if (this._obj.len() > 0) {
             card = makeCardElement(this._obj.getCardAt(this._obj.len() - 1));
             card.children[0].innerHTML = this._obj.len();
+            // click handlers
+            card.addEventListener('mouseup', (e) => {
+                if (!e) var e = window.event;
+                if (e.button == 0) 
+                    moveCardFromZone(this, 
+                        p1_zones['res_zone_1'], 
+                        this._obj.len() - 1);
+                else 
+                    moveCardFromZone(this, 
+                        p1_zones['grave_zone_1'], 
+                        this._obj.len() - 1);
+            })
         } else {
             card = document.createElement("div");
             card.className = "empty-card";
         }
         this._element.appendChild(card);
+        super.makeDraggable(card, this._element.id, this._obj.len() - 1);
     }
 }
 
@@ -140,6 +163,9 @@ export class ClockZone extends ListZone {
 
         // if u can: you can have all these extend the same
         // zone type and then overload a 'setHandlers' function.
+
+        // ok we got the drag handlers encapsulated, have to do
+        // a similar thing for click handlers, maybe.
         this._element.innerHTML = "";
         for (let i = 0; i < this._obj.len(); i++) {
             let card_wrap = document.createElement("div");
@@ -150,6 +176,7 @@ export class ClockZone extends ListZone {
 
             card_wrap.appendChild(card);
             this._element.appendChild(card_wrap);
+            super.makeDraggable(card, this._element.id, i);
         }
     }
 }
@@ -169,6 +196,7 @@ export class LevelZone extends ListZone {
 
             card_wrap.appendChild(card);
             this._element.appendChild(card_wrap);
+            super.makeDraggable(card, this._element.id, i);
         }
     }
 }
@@ -184,6 +212,7 @@ export class GraveZone extends QueueZone {
             grave_modal_zone_1.render();
             this.modalElement.style.display = 'flex';
         })
+        super.makeDraggable(card, this._element.id);
     }
 }
 
@@ -249,7 +278,7 @@ let res_zone_1 = new ResZone(res1, document.getElementById('res_zone_1'));
 let stock_zone_1 = new StockZone(stock1, document.getElementById('stock_zone_1'));
 let clock_zone_1 = new ClockZone(clock1, document.getElementById('clock_zone_1'));
 let level_zone_1 = new LevelZone(level1, document.getElementById("level_zone_1"));
-let grave_zone_1 = new GraveZone(gy1, document.getElementById('grave_zone_1'), document.getElementById('grave_modal_zone_1'));
+let grave_zone_1 = new GraveZone(gy1, document.getElementById('grave_zone_1'), document.getElementById('graveModal1'));
 let grave_modal_zone_1 = new ModalZone(gy1, document.getElementById('grave_modal_zone_1'));
 let center_zone_1_1 = new QueueZone(center1_1, document.getElementById('center_zone_1_1'));
 let center_zone_1_2 = new QueueZone(center1_2, document.getElementById('center_zone_1_2'));

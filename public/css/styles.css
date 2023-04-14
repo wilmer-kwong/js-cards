@@ -49,6 +49,7 @@
 }
 .col-4 {
     display: flex;
+    flex-direction: column;
     width: 240px;
 }
 .player2 .col-4 {
@@ -218,20 +219,37 @@
     height: auto;
 }
 
-/* The Close Button */
-.close {
+    /* The Close Button */
+    .close {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        color: #fff;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        background-color: darkgray;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* Chat */
+.chat-body {
     display: flex;
-    justify-content: center;
-    background-color: black;
-    color: #fff;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: lightcoral;
+    max-width: inherit;
 }
 
-.close:hover,
-.close:focus {
-    background-color: darkgray;
-    text-decoration: none;
-    cursor: pointer;
+.chat-footer {
+    display: flex;
+}
+
+.text {
+    width: 100%;
 }
