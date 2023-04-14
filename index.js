@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 // database connect
-let dbUrl = "mongodb+srv://wilmerk:IdLlhyqYtsk3awfy@wscluster.ouosiqi.mongodb.net/Chat";
+let dbUrl = "";
 mongoose.connect(dbUrl).then(() => {
     console.log("Database connected successfully");
 }).catch((err) => {
