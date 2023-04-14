@@ -1,0 +1,255 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.player1 {
+    display: flex;
+    flex-direction: row;
+}
+.player2 {
+    display: flex;
+    flex-direction: row;
+    transform: rotateX(180deg);
+}
+.playing-field {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    height: 50vh;
+}
+.row-2 {
+    display: flex;
+    flex: 1 1 auto;
+}
+.row-1 {
+    display: flex;
+    flex: 0 1 auto;
+    max-height: 148px;
+}
+.col-3 {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 140px;
+}
+.col-2 {
+    display: flex;
+    flex: 1;
+    flex-basis: 30%;
+    background-color: lightblue;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: auto;
+}
+.col-1 {
+    display: flex;
+    justify-content: end;
+    flex: 1;
+    flex-direction: column;
+    overflow: auto;
+}
+.col-4 {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+}
+.player2 .col-4 {
+    transform: rotateX(-180deg);
+}
+
+.row-1 .col-1 {
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.card {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #aaa;
+    border-radius: 9px;
+    width: 100px;
+    height: 140px;
+    background-color: white;
+    padding: 3px 3px 3px 3px;
+    float: left;
+}
+
+.empty-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px #aaa;
+    border-radius: 9px;
+    width: 100px;
+    height: 140px;
+    background-color: darkgray;
+    padding: 3px 3px 3px 3px;
+    float: left;
+}
+
+.card .value {
+    font-size:15pt;
+    font-family: sans-serif;
+}
+
+.card-wrap {
+    min-width: 40px;
+    height: auto;
+}
+
+.card-wrap:hover {
+    min-width: 110px;
+}
+
+.hand-zone {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hand-2 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden;
+    transform: rotateX(180deg);
+}
+
+.hand-1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.stock {
+    width: 100%;
+}
+
+/* res and clock can be combined with a wrapper probs */
+.res {
+    background-color: gray;
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    min-height: 165px;
+    overflow-x: scroll;
+}
+
+.clock {
+    background-color: blue;
+    display: flex;
+    overflow: auto;
+    width: 100%;
+    max-height: 148px;
+    overflow: auto;
+}
+
+.level {
+    display: flex;
+    flex-direction: row;
+    background-color: blueviolet;
+    transform: rotate(-90deg) translate(0,100%);
+    transform-origin: bottom left;
+    height: 148px;
+    min-width: 148px;
+    max-width: 148px;
+    overflow: hidden;
+}
+
+/* Board classes */
+.board {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    width: 100%;
+    height: 100%;
+}
+
+.center-stage {
+    display: flex;
+    background-color: teal;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: calc(100% / 4);
+}
+.back-stage {
+    display: flex;
+    background-color: pink;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+    gap: calc(100% / 5);
+}
+
+/* Modal Classes */
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content/Box */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    max-height: 80%;
+    width: 80%;
+    overflow: auto;
+}
+
+.modal-content .modal-content {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+    height: auto;
+}
+
+    /* The Close Button */
+    .close {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+        color: #fff;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        background-color: darkgray;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+/* Chat */
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-color: lightcoral;
+    max-width: inherit;
+}
+
+.chat-footer {
+    display: flex;
+}
+
+.text {
+    width: 100%;
+}
