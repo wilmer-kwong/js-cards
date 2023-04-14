@@ -28,10 +28,11 @@ class Chat {
     }
     async postMessage(msg) {
         await msgClient.postMessage(msg)
-        .then(await this.fetchMessages())
         .then(this.render());
     }
-    render() {this._element.innerHTML = "";
+    async render() {
+        await this.fetchMessages();
+        this._element.innerHTML = "";
         this._messages.forEach((record) => {
             let msg = document.createElement('div');
             msg.className = 'chat-msg';

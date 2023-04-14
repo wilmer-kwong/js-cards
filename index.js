@@ -1,7 +1,9 @@
 const express = require('express')
 const path = require('path')
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+const http = require('http')
+const io = require('socket.io')
 
 if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv');
